@@ -1,16 +1,21 @@
 "use client";
 import { useState } from "react";
 import { useAuth } from "../../lib/authContext";
+import { useRouter } from "next/navigation";
 
 export default function Pricing() {
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
   const { user } = useAuth();
+  const router = useRouter();
 
-  const handlePlanSelect = (plan: string) => {
-    setSelectedPlan(plan);
-    console.log("Selected plan:", plan);
-    // Simulate redirecting to a payment page
-    alert(`Redirecting to payment page for ${plan} plan...`);
+  const handlePlanSelect = async (plan: string) => {
+    try {
+      setSelectedPlan(plan);
+      // Redirect to payment page with the selected plan
+      await router.push(`/payment?plan=${plan.toLowerCase()}`);
+    } catch (error) {
+      console.error('Navigation error:', error);
+    }
   };
 
   const features = {
@@ -56,7 +61,7 @@ export default function Pricing() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Basic Plan */}
-          <div className="bg-white rounded-2xl shadow-sm border p-8 hover:shadow-md transition-shadow">
+          <div className="bg-white rounded-2xl shadow-sm border p-8 hover:shadow-md transition-shadow cursor-pointer">
             <h2 className="text-2xl font-bold mb-4">Basic</h2>
             <div className="mb-6">
               <span className="text-4xl font-bold">$9.99</span>
@@ -74,14 +79,14 @@ export default function Pricing() {
             </ul>
             <button
               onClick={() => handlePlanSelect("Basic")}
-              className="w-full bg-gray-100 text-gray-900 px-6 py-3 rounded-lg hover:bg-gray-200 transition-colors"
+              className="w-full bg-gray-100 text-gray-900 px-6 py-3 rounded-lg hover:bg-gray-200 transition-colors cursor-pointer"
             >
               Get Started
             </button>
           </div>
 
           {/* Pro Plan */}
-          <div className="bg-white rounded-2xl shadow-lg border-2 border-blue-500 p-8 hover:shadow-xl transition-shadow relative">
+          <div className="bg-white rounded-2xl shadow-lg border-2 border-blue-500 p-8 hover:shadow-xl transition-shadow relative cursor-pointer">
             <div className="absolute top-0 right-0 bg-blue-500 text-white px-4 py-1 rounded-bl-lg rounded-tr-lg text-sm font-medium">
               Most Popular
             </div>
@@ -102,14 +107,14 @@ export default function Pricing() {
             </ul>
             <button
               onClick={() => handlePlanSelect("Pro")}
-              className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+              className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer"
             >
               Get Started
             </button>
           </div>
 
           {/* Enterprise Plan */}
-          <div className="bg-white rounded-2xl shadow-sm border p-8 hover:shadow-md transition-shadow">
+          <div className="bg-white rounded-2xl shadow-sm border p-8 hover:shadow-md transition-shadow cursor-pointer">
             <h2 className="text-2xl font-bold mb-4">Enterprise</h2>
             <div className="mb-6">
               <span className="text-4xl font-bold">$49.99</span>
@@ -127,7 +132,7 @@ export default function Pricing() {
             </ul>
             <button
               onClick={() => handlePlanSelect("Enterprise")}
-              className="w-full bg-gray-100 text-gray-900 px-6 py-3 rounded-lg hover:bg-gray-200 transition-colors"
+              className="w-full bg-gray-100 text-gray-900 px-6 py-3 rounded-lg hover:bg-gray-200 transition-colors cursor-pointer"
             >
               Contact Sales
             </button>
