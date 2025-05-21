@@ -20,7 +20,26 @@
 }
 
 body {
-  background: var(--background);
+  background: linear-gradient(to bottom, #f0f0f0, #ffffff);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  transition: background 0.3s ease;
+}
+
+button, a {
+  transition: all 0.2s ease;
+}
+
+button:hover, a:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+textarea, input {
+  transition: border-color 0.2s ease;
+}
+
+textarea:focus, input:focus {
+  border-color: #3b82f6;
+  outline: none;
 }
