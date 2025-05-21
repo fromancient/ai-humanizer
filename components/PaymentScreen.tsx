@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { FaPaypal, FaCreditCard, FaBitcoin } from 'react-icons/fa';
-import type { IconType } from 'react-icons';
 
 interface PaymentMethod {
   id: string;

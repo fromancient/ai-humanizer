@@ -172,7 +172,7 @@ export default function Home() {
                 </div>
               </div>
               <p className="text-gray-700">
-                "This tool has been a game-changer for my academic writing. The humanized content passes all AI detection tools I've tried."
+                &ldquo;This tool has been a game-changer for my academic writing. The humanized content passes all AI detection tools I&apos;ve tried.&rdquo;
               </p>
             </div>
             <div className="bg-gray-50 rounded-xl p-8">
@@ -186,10 +186,16 @@ export default function Home() {
                 </div>
               </div>
               <p className="text-gray-700">
-                "I use this tool daily for my content creation. It saves me hours of editing and makes my content feel more authentic."
+                &ldquo;I use this tool daily for my content creation. It saves me hours of editing and makes my content feel more authentic.&rdquo;
               </p>
             </div>
           </div>
+          <p className="text-gray-600">
+            &ldquo;This tool has revolutionized how we handle our content.&rdquo; - John Doe, Content Manager
+          </p>
+          <p className="text-gray-600">
+            &ldquo;The best AI humanization tool we&apos;ve used.&rdquo; - Jane Smith, Marketing Director
+          </p>
         </div>
       </div>
 

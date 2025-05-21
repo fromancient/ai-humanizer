@@ -1,11 +1,14 @@
 "use client";
 import { useAuth } from "../lib/authContext";
+import Link from 'next/link';
 
 export default function Navbar() {
   const { user, logout, loading } = useAuth();
   return (
     <nav className="w-full flex justify-between items-center px-8 py-4 border-b border-gray-200 mb-8">
-      <a href="/" className="font-bold text-lg">AI Humanizer</a>
+      <Link href="/" className="text-xl font-bold text-gray-900">
+        AI Humanizer
+      </Link>
       <div className="flex gap-6 items-center">
         {user && (
           <a href="/dashboard" className="hover:underline">Dashboard</a>

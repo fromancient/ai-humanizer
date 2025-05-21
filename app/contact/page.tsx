@@ -40,7 +40,7 @@ export default function Contact() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Get in Touch</h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+            We&apos;d love to hear from you. Let&apos;s discuss how we can help.
           </p>
         </div>
       </div>

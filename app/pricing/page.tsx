@@ -1,16 +1,11 @@
 "use client";
-import { useState } from "react";
-import { useAuth } from "../../lib/authContext";
 import { useRouter } from "next/navigation";
 
 export default function Pricing() {
-  const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
-  const { user } = useAuth();
   const router = useRouter();
 
   const handlePlanSelect = async (plan: string) => {
     try {
-      setSelectedPlan(plan);
       // Redirect to payment page with the selected plan
       await router.push(`/payment?plan=${plan.toLowerCase()}`);
     } catch (error) {
