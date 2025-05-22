@@ -16,19 +16,49 @@ export default function Home() {
     setError("");
     setSuccess("");
     try {
-      const response = await fetch("/api/humanize", {
+      // Submit text for humanization
+      const submitResponse = await fetch("/api/humanize", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: input }),
+        body: JSON.stringify({ 
+          text: input,
+          readability: "High School",
+          purpose: "General Writing",
+          strength: "Balanced",
+          model: "v2"
+        }),
       });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error || "Failed to humanize text");
-      setOutput(data.output);
+      const submitData = await submitResponse.json();
+      if (!submitResponse.ok) throw new Error(submitData.error || "Failed to submit text for humanization");
+
+      // Poll for document status until complete
+      let isComplete = false;
+      let humanizedText = "";
+      
+      while (!isComplete) {
+        await new Promise(resolve => setTimeout(resolve, 5000)); // Wait 5 seconds between checks
+        
+        const statusResponse = await fetch("/api/humanize/status", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ documentId: submitData.id })
+        });
+        const statusData = await statusResponse.json();
+        
+        if (!statusResponse.ok) throw new Error(statusData.error || "Failed to retrieve document");
+        
+        if (statusData.output) {
+          isComplete = true;
+          humanizedText = statusData.output;
+        }
+      }
+
+      setOutput(humanizedText);
       if (user) {
         const { error: dbError } = await supabase.from("projects").insert({
           user_id: user.id,
           input,
-          output: data.output,
+          output: humanizedText,
         });
         if (dbError) setError(dbError.message);
         else setSuccess("Saved to your dashboard!");
@@ -189,13 +219,35 @@ export default function Home() {
                 &ldquo;I use this tool daily for my content creation. It saves me hours of editing and makes my content feel more authentic.&rdquo;
               </p>
             </div>
+            <div className="bg-gray-50 rounded-xl p-8">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-xl">
+                  J
+                </div>
+                <div className="ml-4">
+                  <h4 className="font-semibold">John Doe</h4>
+                  <p className="text-gray-600">Content Manager</p>
+                </div>
+              </div>
+              <p className="text-gray-700">
+                &ldquo;This tool has revolutionized how we handle our content.&rdquo;
+              </p>
+            </div>
+            <div className="bg-gray-50 rounded-xl p-8">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-xl">
+                  J
+                </div>
+                <div className="ml-4">
+                  <h4 className="font-semibold">Jane Smith</h4>
+                  <p className="text-gray-600">Marketing Director</p>
+                </div>
+              </div>
+              <p className="text-gray-700">
+                &ldquo;The best AI humanization tool we&apos;ve used.&rdquo;
+              </p>
+            </div>
           </div>
-          <p className="text-gray-600">
-            &ldquo;This tool has revolutionized how we handle our content.&rdquo; - John Doe, Content Manager
-          </p>
-          <p className="text-gray-600">
-            &ldquo;The best AI humanization tool we&apos;ve used.&rdquo; - Jane Smith, Marketing Director
-          </p>
         </div>
       </div>
 
